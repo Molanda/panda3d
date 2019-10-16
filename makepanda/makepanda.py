@@ -4972,7 +4972,7 @@ if (GetTarget() == 'android' and PkgSkip("EGL")==0 and PkgSkip("GLES")==0 and no
 # DIRECTORY: panda/src/tinydisplay/
 #
 
-if (not RUNTIME and (GetTarget() in ('windows', 'darwin') or PkgSkip("X11")==0) and PkgSkip("TINYDISPLAY")==0):
+if (not RUNTIME and PkgSkip("TINYDISPLAY")==0):
   OPTS=['DIR:panda/src/tinydisplay', 'BUILDING:TINYDISPLAY']
   TargetAdd('p3tinydisplay_composite1.obj', opts=OPTS, input='p3tinydisplay_composite1.cxx')
   TargetAdd('p3tinydisplay_composite2.obj', opts=OPTS, input='p3tinydisplay_composite2.cxx')
@@ -4988,7 +4988,7 @@ if (not RUNTIME and (GetTarget() in ('windows', 'darwin') or PkgSkip("X11")==0) 
   elif GetTarget() == 'windows':
     TargetAdd('libp3tinydisplay.dll', input='libp3windisplay.dll')
     TargetAdd('libp3tinydisplay.dll', opts=['WINIMM', 'WINGDI', 'WINKERNEL', 'WINOLDNAMES', 'WINUSER', 'WINMM'])
-  else:
+  elif PkgSkip("X11") == 0:
     TargetAdd('libp3tinydisplay.dll', input='p3x11display_composite1.obj')
     TargetAdd('libp3tinydisplay.dll', opts=['X11'])
   TargetAdd('libp3tinydisplay.dll', input='p3tinydisplay_composite1.obj')
@@ -6738,7 +6738,6 @@ This package contains the SDK for development with Panda3D, install panda3d-runt
 /usr/share/mime-info/panda3d.keys
 /usr/share/mime/packages/panda3d.xml
 /usr/share/application-registry/panda3d.applications
-/usr/share/applications/*.desktop
 /etc/ld.so.conf.d/panda3d.conf
 /usr/%_lib/panda3d
 """ + PYTHON_SITEPACKAGES + """
@@ -6766,7 +6765,6 @@ This package contains the runtime distribution and browser plugin of the Panda3D
 /usr/share/mime-info/panda3d-runtime.keys
 /usr/share/mime/packages/panda3d-runtime.xml
 /usr/share/application-registry/panda3d-runtime.applications
-/usr/share/applications/*.desktop
 """
 
 # plist file for Mac OSX
